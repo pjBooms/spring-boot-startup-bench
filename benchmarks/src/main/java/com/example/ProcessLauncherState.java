@@ -41,25 +41,33 @@ public class ProcessLauncherState {
 	private List<String> args;
 	private File home;
 
-	public ProcessLauncherState(String dir, String... args) {
+	public ProcessLauncherState(String executable, boolean jet, String dir, String... args) {
 		this.args = new ArrayList<>();
-		this.args.add(System.getProperty("java.home") + "/bin/java");
+		this.args.add(executable);
 		this.args.add("-Xmx128m");
-		this.args.add("-Djava.security.egd=file:/dev/./urandom");
-		String vendor = System.getProperty("java.vendor", "").toLowerCase();
-		if (vendor.contains("ibm") || vendor.contains("j9")) {
-			this.args.addAll(Arrays.asList("-Xms32m", "-Xquickstart", "-Xshareclasses",
-					"-Xscmx128m"));
+//		this.args.add("-Djava.security.egd=file:/dev/urandom");
+//		String vendor = System.getProperty("java.vendor", "").toLowerCase();
+//		if (vendor.contains("ibm") || vendor.contains("j9")) {
+//			this.args.addAll(Arrays.asList("-Xms32m", "-Xquickstart", "-Xshareclasses",
+//					"-Xscmx128m"));
+//		}
+//		else {
+//			this.args.addAll(Arrays.asList("-XX:TieredStopAtLevel=1"));
+//		}
+		if (jet) {
+			this.args.add("-args");
 		}
-		else {
-			this.args.addAll(Arrays.asList("-XX:TieredStopAtLevel=1"));
-		}
+
 		this.args.addAll(Arrays.asList(args));
 		if (System.getProperty("bench.args") != null) {
 			this.args.addAll(4,
 					Arrays.asList(System.getProperty("bench.args").split(" ")));
 		}
 		this.home = new File(dir);
+	}
+
+	public ProcessLauncherState(String dir, String... args) {
+		this(System.getProperty("java.home") + "/bin/java", false, dir, args);
 	}
 
 	public void after() throws Exception {
@@ -92,6 +100,19 @@ public class ProcessLauncherState {
 
 	public void run() throws Exception {
 		ProcessBuilder builder = new ProcessBuilder(args);
+		builder.directory(home);
+		builder.redirectErrorStream(true);
+		customize(builder);
+		if (!"false".equals(System.getProperty("debug", "false"))) {
+			System.err.println("Running: " + Utils.join(args, " "));
+		}
+		started = builder.start();
+		monitor();
+	}
+
+	public void runWithDotInClasspath() throws Exception {
+		ProcessBuilder builder = new ProcessBuilder(args);
+		builder.environment().put("CLASSPATH", ".");
 		builder.directory(home);
 		builder.redirectErrorStream(true);
 		customize(builder);
@@ -190,7 +211,7 @@ public class ProcessLauncherState {
 		return home + "/bin/jar";
 	}
 
-	public static String jarFile(String coordinates) {
+	public static String zipFile(String coordinates, boolean jet) {
 		Pattern p = Pattern.compile("([^: ]+):([^: ]+)(:([^: ]*)(:([^: ]+))?)?:([^: ]+)");
 		Matcher m = p.matcher(coordinates);
 		if (!m.matches()) {
@@ -205,12 +226,20 @@ public class ProcessLauncherState {
 		String path = ".."; // always run in benchmarks folder
 		try {
 			return new File(path).getAbsoluteFile().getCanonicalPath() + File.separator
-					+ artifactId + File.separator + "target" + File.separator + artifactId
-					+ "-" + version + classifier + "." + extension;
+					+ artifactId + File.separator + "target" + File.separator + (jet?"jet" + File.separator:"") +
+					artifactId+ "-" + version + classifier + "." + extension;
 		}
 		catch (IOException e) {
 			throw new IllegalStateException("Cannot find benchmarks", e);
 		}
+	}
+
+	public static String jarFile(String coordinates) {
+		return zipFile(coordinates, false);
+	}
+
+	public static String jetZipFile(String coordinates) {
+		return zipFile(coordinates, true);
 	}
 
 	private static String get(String value, String defaultValue) {

@@ -50,12 +50,12 @@ import org.openjdk.jmh.util.FileUtils;
 @BenchmarkMode(Mode.AverageTime)
 public class OracleCdsBenchmark {
 
-	@Benchmark
+//	@Benchmark
 	public void sharedClasses(SharedState state) throws Exception {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void thinMain(ThinMainState state) throws Exception {
 		state.run();
 	}

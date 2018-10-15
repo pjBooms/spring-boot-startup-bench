@@ -42,7 +42,7 @@
 								<artifactItem>
 									<groupId>org.springframework.boot</groupId>
 									<artifactId>spring-boot-devtools</artifactId>
-									<version>2.0.0.BUILD-SNAPSHOT</version>
+									<version>2.0.0.RELEASE</version>
 									<outputDirectory>${project.basedir}/target</outputDirectory>
 									<destFileName>spring-boot-devtools-latest.jar</destFileName>
 								</artifactItem>
@@ -57,35 +57,38 @@
 				<configuration>
 					<cloneProjectsTo/>
 					<cloneClean>false</cloneClean>
+  				        <properties>
+				             <jet.home>${jet.home}</jet.home>
+				        </properties>
 				</configuration>
 				<executions>
-					<execution>
-						<id>13x</id>
-						<phase>install</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<inherited>false</inherited>
-						<configuration>
-							<pomIncludes>
-								<pomInclude>configserver/pom.xml</pomInclude>
-								<pomInclude>demo/pom.xml</pomInclude>
-							</pomIncludes>
-							<projectsDirectory>..</projectsDirectory>
-							<goals>
-								<goal>install</goal>
-							</goals>
-							<properties>
-								<skipTests/>
-							</properties>
-							<profiles>
-								<profile>boot13x</profile>
-							</profiles>
-						</configuration>
-					</execution>
+					<!--<execution>-->
+						<!--<id>13x</id>-->
+						<!--<phase>install</phase>-->
+						<!--<goals>-->
+							<!--<goal>run</goal>-->
+						<!--</goals>-->
+						<!--<inherited>false</inherited>-->
+						<!--<configuration>-->
+							<!--<pomIncludes>-->
+								<!--<pomInclude>configserver/pom.xml</pomInclude>-->
+								<!--<pomInclude>demo/pom.xml</pomInclude>-->
+							<!--</pomIncludes>-->
+							<!--<projectsDirectory>..</projectsDirectory>-->
+							<!--<goals>-->
+								<!--<goal>install</goal>-->
+							<!--</goals>-->
+							<!--<properties>-->
+								<!--<skipTests/>-->
+							<!--</properties>-->
+							<!--<profiles>-->
+								<!--<profile>boot13x</profile>-->
+							<!--</profiles>-->
+						<!--</configuration>-->
+					<!--</execution>-->
 					<execution>
 						<id>15x</id>
-						<phase>install</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
@@ -97,7 +100,8 @@
 							</pomIncludes>
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
-								<goal>install</goal>
+								<goal>jet:testrun</goal>
+								<goal>jet:build</goal>
 							</goals>
 							<properties>
 								<skipTests/>
@@ -109,7 +113,7 @@
 					</execution>
 					<execution>
 						<id>20x</id>
-						<phase>install</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
@@ -120,7 +124,8 @@
 							</pomIncludes>
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
-								<goal>install</goal>
+								<goal>jet:testrun</goal>
+								<goal>jet:build</goal>
 							</goals>
 							<properties>
 								<skipTests/>
@@ -131,32 +136,58 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>shaded</id>
-						<phase>install</phase>
+						<id>jet-boot14x</id>
+						<phase>package</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
 						<inherited>false</inherited>
 						<configuration>
 							<pomIncludes>
-								<pomInclude>petclinic/pom.xml</pomInclude>
-								<pomInclude>petclinic-latest/pom.xml</pomInclude>
+								<pomInclude>configserver/pom.xml</pomInclude>
+								<pomInclude>demo/pom.xml</pomInclude>
 							</pomIncludes>
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
-								<goal>install</goal>
+								<goal>jet:testrun</goal>
+								<goal>jet:build</goal>
 							</goals>
 							<properties>
 								<skipTests/>
 							</properties>
 							<profiles>
-								<profile>shaded</profile>
+								<profile>jet-boot14x</profile>
 							</profiles>
 						</configuration>
 					</execution>
 					<execution>
-						<id>thin</id>
-						<phase>install</phase>
+						<id>jet-boot15x</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<pomIncludes>
+								<pomInclude>configserver/pom.xml</pomInclude>
+								<pomInclude>demo/pom.xml</pomInclude>
+							</pomIncludes>
+							<projectsDirectory>..</projectsDirectory>
+							<goals>
+								<goal>jet:testrun</goal>
+								<goal>jet:build</goal>
+							</goals>
+							<properties>
+								<skipTests/>
+							</properties>
+							<profiles>
+								<profile>jet-boot15x</profile>
+							</profiles>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jet-boot20x</id>
+						<phase>package</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
@@ -164,21 +195,119 @@
 						<configuration>
 							<pomIncludes>
 								<pomInclude>demo/pom.xml</pomInclude>
-								<pomInclude>petclinic/pom.xml</pomInclude>
-								<pomInclude>petclinic-latest/pom.xml</pomInclude>
 							</pomIncludes>
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
-								<goal>install</goal>
+								<goal>jet:testrun</goal>
+								<goal>jet:build</goal>
 							</goals>
 							<properties>
 								<skipTests/>
 							</properties>
 							<profiles>
-								<profile>thin</profile>
+								<profile>jet-boot20x</profile>
 							</profiles>
 						</configuration>
 					</execution>
+					<execution>
+						<id>jet-boot</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<pomIncludes>
+								<pomInclude>minimal/pom.xml</pomInclude>
+								<pomInclude>petclinic/pom.xml</pomInclude>
+								<pomInclude>petclinic-latest/pom.xml</pomInclude>
+							</pomIncludes>
+							<projectsDirectory>..</projectsDirectory>
+							<goals>
+								<goal>jet:testrun</goal>
+								<goal>jet:build</goal>
+							</goals>
+							<properties>
+								<skipTests/>
+							</properties>
+							<profiles>
+								<profile>jet-boot</profile>
+							</profiles>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jet-global</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<inherited>false</inherited>
+						<configuration>
+							<pomIncludes>
+								<pomInclude>minimal/pom.xml</pomInclude>
+							</pomIncludes>
+							<projectsDirectory>..</projectsDirectory>
+							<goals>
+								<goal>jet:testrun</goal>
+								<goal>jet:build</goal>
+							</goals>
+							<properties>
+								<skipTests/>
+							</properties>
+							<profiles>
+								<profile>jet-global</profile>
+							</profiles>
+						</configuration>
+					</execution>
+					<!--<execution>-->
+						<!--<id>shaded</id>-->
+						<!--<phase>install</phase>-->
+						<!--<goals>-->
+							<!--<goal>run</goal>-->
+						<!--</goals>-->
+						<!--<inherited>false</inherited>-->
+						<!--<configuration>-->
+							<!--<pomIncludes>-->
+								<!--<pomInclude>petclinic/pom.xml</pomInclude>-->
+								<!--<pomInclude>petclinic-latest/pom.xml</pomInclude>-->
+							<!--</pomIncludes>-->
+							<!--<projectsDirectory>..</projectsDirectory>-->
+							<!--<goals>-->
+								<!--<goal>install</goal>-->
+							<!--</goals>-->
+							<!--<properties>-->
+								<!--<skipTests/>-->
+							<!--</properties>-->
+							<!--<profiles>-->
+								<!--<profile>shaded</profile>-->
+							<!--</profiles>-->
+						<!--</configuration>-->
+					<!--</execution>-->
+					<!--<execution>-->
+						<!--<id>thin</id>-->
+						<!--<phase>install</phase>-->
+						<!--<goals>-->
+							<!--<goal>run</goal>-->
+						<!--</goals>-->
+						<!--<inherited>false</inherited>-->
+						<!--<configuration>-->
+							<!--<pomIncludes>-->
+								<!--<pomInclude>demo/pom.xml</pomInclude>-->
+								<!--<pomInclude>petclinic/pom.xml</pomInclude>-->
+								<!--<pomInclude>petclinic-latest/pom.xml</pomInclude>-->
+							<!--</pomIncludes>-->
+							<!--<projectsDirectory>..</projectsDirectory>-->
+							<!--<goals>-->
+								<!--<goal>install</goal>-->
+							<!--</goals>-->
+							<!--<properties>-->
+								<!--<skipTests/>-->
+							<!--</properties>-->
+							<!--<profiles>-->
+								<!--<profile>thin</profile>-->
+							<!--</profiles>-->
+						<!--</configuration>-->
+					<!--</execution>-->
 				</executions>
 			</plugin>
 			<plugin>
@@ -187,6 +316,11 @@
 				<configuration>
 					<skip>true</skip>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.excelsiorjet</groupId>
+				<artifactId>excelsior-jet-maven-plugin</artifactId>
+				<version>1.2.1-SNAPSHOT</version>
 			</plugin>
 		</plugins>
 	</build>

@@ -24,7 +24,29 @@
 		<java.version>1.8</java.version>
 		<spring-boot.version>1.5.12.RELEASE</spring-boot.version>
         <docker.image.prefix>springio</docker.image.prefix>
+		<jar.classifier>boot</jar.classifier>
+		<jet.apptype>plain</jet.apptype>
+		<jet.classifier></jet.classifier>
+		<jet.compiler.option>-baselineall</jet.compiler.option>
+		<jet.suffix></jet.suffix>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>jet-boot</id>
+			<properties>
+				<jet.apptype>spring-boot</jet.apptype>
+				<jet.classifier>-${jar.classifier}</jet.classifier>
+			</properties>
+		</profile>
+		<profile>
+			<id>jet-global</id>
+			<properties>
+				<jet.compiler.option>+global</jet.compiler.option>
+				<jet.suffix>-global</jet.suffix>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -55,6 +77,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${spring-boot.version}</version>
+				<configuration>
+					<classifier>${jar.classifier}</classifier>
+				</configuration>
 			</plugin>
 			<plugin>
 				<!--skip deploy (this is just a test module) -->
@@ -63,20 +88,39 @@
 					<skip>true</skip>
 				</configuration>
 			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>com.spotify</groupId>-->
+				<!--<artifactId>dockerfile-maven-plugin</artifactId>-->
+				<!--<version>1.3.4</version>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>default</id>-->
+						<!--<goals>-->
+							<!--<goal>build</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+				<!--<configuration>-->
+					<!--<repository>${docker.image.prefix}/${project.artifactId}</repository>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>1.3.4</version>
-				<executions>
-					<execution>
-						<id>default</id>
-						<goals>
-							<goal>build</goal>
-						</goals>
-					</execution>
-				</executions>
+				<groupId>com.excelsiorjet</groupId>
+				<artifactId>excelsior-jet-maven-plugin</artifactId>
+				<version>1.2.1-SNAPSHOT</version>
 				<configuration>
-					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<appType>${jet.apptype}</appType>
+					<jetResourcesDir>${basedir}/jetresources-${jet.apptype}-${jar.classifier}</jetResourcesDir>
+					<artifactName>${project.build.finalName}-${jet.apptype}-${jar.classifier}${jet.suffix}</artifactName>
+					<mainJar>target/${project.build.finalName}${jet.classifier}.jar</mainJar>
+					<mainClass>com/example/DemoApplication</mainClass>
+					<multiApp>true</multiApp>
+					<execProfiles>
+						<testRunTimeout>60</testRunTimeout>
+					</execProfiles>
+					<compilerOptions>
+						<compilerOption>${jet.compiler.option}</compilerOption>
+					</compilerOptions>
 				</configuration>
 			</plugin>
 		</plugins>

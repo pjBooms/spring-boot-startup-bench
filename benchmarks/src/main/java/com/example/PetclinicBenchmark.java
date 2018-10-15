@@ -46,7 +46,7 @@ public class PetclinicBenchmark {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void noverify(NoVerifyState state) throws Exception {
 		state.run();
 	}
@@ -60,6 +60,21 @@ public class PetclinicBenchmark {
 	public void devtoolsRestart(ExplodedDevtoolsState state) throws Exception {
 		state.run();
 	}
+
+	@Benchmark
+	public void jetPlain(JetPlainState state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetBoot(JetBootState state) throws Exception {
+		state.run();
+	}
+
+        @Benchmark
+   	public void jetDevtoolsRestart(JetDevtoolsState state) throws Exception {
+   		state.run();
+   	}
 
 	public static void main(String[] args) throws Exception {
 		BasicState state = new BasicState();
@@ -140,6 +155,56 @@ public class PetclinicBenchmark {
 		}
 
 		@TearDown(Level.Trial)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+    @State(Scope.Benchmark)
+   	public static class JetDevtoolsState extends DevToolsLauncherState {
+   		public JetDevtoolsState() {
+   			super("target/demo/petclinic", "target/demo", ".restart",
+					jetZipFile("com.example:petclinic:zip:plain-boot:1.4.2"), true, "-Dspring.devtools.livereload.enabled=false",
+   					"-Dspring.devtools.restart.pollInterval=100",
+   					"-Dspring.devtools.restart.quietPeriod=10",
+   					"-Djet.append.classpath.env=true",
+   					"org.springframework.samples.petclinic.PetClinicApplication", "--server.port=0");
+   		}
+
+   		@Override
+   		@Setup(Level.Trial)
+   		public void setup() throws Exception {
+   			super.setup();
+   		}
+
+   		@TearDown(Level.Trial)
+   		public void stop() throws Exception {
+   			super.after();
+   		}
+   	}
+
+
+	@State(Scope.Benchmark)
+	public static class JetPlainState extends ProcessLauncherState {
+		public JetPlainState() {
+			super("target/demo/petclinic", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:petclinic:zip:plain-boot:1.4.2"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetBootState extends ProcessLauncherState {
+		public JetBootState() {
+			super("target/demo/petclinic", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:petclinic:zip:spring-boot-boot:1.4.2"));
+		}
+
+		@TearDown(Level.Iteration)
 		public void stop() throws Exception {
 			super.after();
 		}

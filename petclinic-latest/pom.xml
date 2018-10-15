@@ -35,7 +35,8 @@
 		<thin.version>1.0.12.RELEASE</thin.version>
 		<spring.version>5.1.0.BUILD-SNAPSHOT</spring.version>
 		<spring-data-releasetrain.version>Lovelace-BUILD-SNAPSHOT</spring-data-releasetrain.version>
-
+        <jet.apptype>plain</jet.apptype>
+        <jet.classifier></jet.classifier>
 	</properties>
 
 	<dependencies>
@@ -125,22 +126,22 @@
 						<groupId>org.springframework.boot</groupId>
 						<artifactId>spring-boot-maven-plugin</artifactId>
 					</plugin>
-					<plugin>
-						<groupId>com.spotify</groupId>
-						<artifactId>dockerfile-maven-plugin</artifactId>
-						<version>1.3.4</version>
-						<executions>
-							<execution>
-								<id>default</id>
-								<goals>
-									<goal>build</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<repository>${docker.image.prefix}/${project.artifactId}</repository>
-						</configuration>
-					</plugin>
+					<!--<plugin>-->
+						<!--<groupId>com.spotify</groupId>-->
+						<!--<artifactId>dockerfile-maven-plugin</artifactId>-->
+						<!--<version>1.3.4</version>-->
+						<!--<executions>-->
+							<!--<execution>-->
+								<!--<id>default</id>-->
+								<!--<goals>-->
+									<!--<goal>build</goal>-->
+								<!--</goals>-->
+							<!--</execution>-->
+						<!--</executions>-->
+						<!--<configuration>-->
+							<!--<repository>${docker.image.prefix}/${project.artifactId}</repository>-->
+						<!--</configuration>-->
+					<!--</plugin>-->
 				</plugins>
 			</build>
 		</profile>
@@ -178,6 +179,13 @@
 				</plugins>
 			</build>
 		</profile>
+        <profile>
+      			<id>jet-boot</id>
+      			<properties>
+      				<jet.apptype>spring-boot</jet.apptype>
+                    <jet.classifier>-${jar.classifier}</jet.classifier>
+      			</properties>
+   		</profile>
 	</profiles>
 
 	<build>
@@ -201,7 +209,7 @@
 		</pluginManagement>
 		<plugins>
 
-			<!-- Spring Boot Actuator displays build-related information if a git.properties 
+			<!-- Spring Boot Actuator displays build-related information if a git.properties
 				file is present at the classpath -->
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
@@ -249,6 +257,25 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+            <plugin>
+                <groupId>com.excelsiorjet</groupId>
+                <artifactId>excelsior-jet-maven-plugin</artifactId>
+                <version>1.2.1-SNAPSHOT</version>
+                <configuration>
+                    <appType>${jet.apptype}</appType>
+                    <jetResourcesDir>${basedir}/jetresources-${jet.apptype}-${jar.classifier}</jetResourcesDir>
+                    <artifactName>${project.build.finalName}-${jet.apptype}-${jar.classifier}</artifactName>
+                    <mainJar>target/${project.build.finalName}${jet.classifier}.jar</mainJar>
+                    <mainClass>org/springframework/samples/petclinic/PetClinicApplication</mainClass>
+                    <multiApp>true</multiApp>
+                    <execProfiles>
+                        <testRunTimeout>60</testRunTimeout>
+                    </execProfiles>
+                    <compilerOptions>
+                        <compilerOption>-baselineall</compilerOption>
+                    </compilerOptions>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 

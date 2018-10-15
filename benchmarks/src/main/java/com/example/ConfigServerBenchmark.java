@@ -48,18 +48,48 @@ public class ConfigServerBenchmark {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void fatJar13x(FatJar13xState state) throws Exception {
 		state.run();
 	}
 
 	@Benchmark
-	public void devtoolsRestart(ExplodedDevtoolsState state) throws Exception {
+	public void devtoolsRestart(JetDevtoolsState state) throws Exception {
 		state.run();
 	}
 
 	@Benchmark
-	public void explodedJarMain(MainState state) throws Exception {
+	public void explodedJarMain14x(MainState14x state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void explodedJarMain15x(MainState15x state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetPlain14x(JetPlainState14x state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetBoot14x(JetBootState14x state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetPlain15x(JetPlainState15x state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetBoot15x(JetBootState15x state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetDevtoolsRestart(JetDevtoolsState state) throws Exception {
 		state.run();
 	}
 
@@ -141,9 +171,32 @@ public class ConfigServerBenchmark {
 		}
 	}
 
+    @State(Scope.Benchmark)
+   	public static class JetDevtoolsState extends DevToolsLauncherState {
+   		public JetDevtoolsState() {
+   			super("target/demo/configserver", "target/demo", ".restart",
+					jetZipFile("com.example:configserver:zip:plain-14x:0.0.1-SNAPSHOT"), true, "-Dspring.devtools.livereload.enabled=false",
+   					"-Dspring.devtools.restart.pollInterval=100",
+   					"-Dspring.devtools.restart.quietPeriod=10",
+   					"-Djet.append.classpath.env=true",
+   					"demo.ConfigServerApplication", "--server.port=0");
+   		}
+
+   		@Override
+   		@Setup(Level.Trial)
+   		public void setup() throws Exception {
+   			super.setup();
+   		}
+
+   		@TearDown(Level.Trial)
+   		public void stop() throws Exception {
+   			super.after();
+   		}
+   	}
+
 	@State(Scope.Benchmark)
-	public static class MainState extends ProcessLauncherState {
-		public MainState() {
+	public static class MainState14x extends ProcessLauncherState {
+		public MainState14x() {
 			super("target/demo", "-cp", CLASSPATH, "demo.ConfigServerApplication",
 					"--server.port=0");
 			unpack("target/demo",
@@ -156,4 +209,70 @@ public class ConfigServerBenchmark {
 		}
 	}
 
+	@State(Scope.Benchmark)
+	public static class MainState15x extends ProcessLauncherState {
+		public MainState15x() {
+			super("target/demo", "-cp", CLASSPATH, "demo.ConfigServerApplication",
+					"--server.port=0");
+			unpack("target/demo",
+					jarFile("com.example:configserver:jar:15x:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetPlainState14x extends ProcessLauncherState {
+		public JetPlainState14x() {
+			super("target/demo/configserver", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:configserver:zip:plain-14x:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetBootState14x extends ProcessLauncherState {
+		public JetBootState14x() {
+			super("target/demo/configserver", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:configserver:zip:spring-boot-14x:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetPlainState15x extends ProcessLauncherState {
+		public JetPlainState15x() {
+			super("target/demo/configserver", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:configserver:zip:plain-15x:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetBootState15x extends ProcessLauncherState {
+		public JetBootState15x() {
+			super("target/demo/configserver", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:configserver:zip:spring-boot-15x:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
 }

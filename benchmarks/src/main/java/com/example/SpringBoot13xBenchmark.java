@@ -33,17 +33,17 @@ import org.openjdk.jmh.annotations.Warmup;
 @BenchmarkMode(Mode.AverageTime)
 public class SpringBoot13xBenchmark {
 
-	@Benchmark
+//	@Benchmark
 	public void fatJar(BasicState state) throws Exception {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void explodedJarLauncher(BootState state) throws Exception {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void explodedJarMain(MainState state) throws Exception {
 		state.run();
 	}

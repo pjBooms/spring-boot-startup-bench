@@ -25,16 +25,26 @@ import java.util.stream.IntStream;
 public class DevToolsLauncherState extends ProcessLauncherState {
 
 	private Path restart;
+	private boolean jet;
 	private int count = 0;
 
-	public DevToolsLauncherState(String dir, String restart, String jar, String... args) {
-		super(dir, args);
+	public DevToolsLauncherState(String executable, String dir, String restart, String zip, boolean jet, String... args) {
+   	    super(executable, false, dir, args);
 		this.restart = new File(dir, restart).toPath();
-		unpack(dir, jar);
+		this.jet = jet;
+		unpack(dir, zip);
+	}
+
+	public DevToolsLauncherState(String dir, String restart, String jar, String... args) {
+		this(System.getProperty("java.home") + "/bin/java", dir, restart, jar, false, args);
 	}
 
 	public void setup() throws Exception {
-		super.run();
+		if (jet) {
+			super.runWithDotInClasspath();
+		} else {
+			super.run();
+		}
 	}
 
 	@Override

@@ -17,16 +17,7 @@ package com.example;
 
 import java.io.File;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Fork;
-import org.openjdk.jmh.annotations.Level;
-import org.openjdk.jmh.annotations.Measurement;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.Scope;
-import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.annotations.TearDown;
-import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.annotations.*;
 
 @Measurement(iterations = 5)
 @Warmup(iterations = 1)
@@ -47,10 +38,25 @@ public class MinimalBenchmark {
 		state.run();
 	}
 
+	@Benchmark
+	public void jetPlain(JetGlobalState state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetGlobal(JetGlobalState state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetBoot(JetBootState state) throws Exception {
+		state.run();
+	}
+
 	@State(Scope.Benchmark)
 	public static class FatJarState extends ProcessLauncherState {
 		public FatJarState() {
-			super("target", "-jar", jarFile("com.example:minimal:0.0.1-SNAPSHOT"),
+			super("target", "-jar", jarFile("com.example:minimal:jar:boot:0.0.1-SNAPSHOT"),
 					"--server.port=0");
 		}
 
@@ -65,7 +71,7 @@ public class MinimalBenchmark {
 		public MainState() {
 			super("target/demo", "-cp", CLASSPATH, "com.example.DemoApplication",
 					"--server.port=0");
-			unpack("target/demo", jarFile("com.example:minimal:0.0.1-SNAPSHOT"));
+			unpack("target/demo", jarFile("com.example:minimal:jar:boot:0.0.1-SNAPSHOT"));
 		}
 
 		@TearDown(Level.Iteration)
@@ -74,4 +80,44 @@ public class MinimalBenchmark {
 		}
 	}
 
+	@State(Scope.Benchmark)
+	public static class JetPlainState extends ProcessLauncherState {
+
+		public JetPlainState() {
+			super("target/demo/minimal", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:minimal:zip:plain-boot:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetGlobalState extends ProcessLauncherState {
+
+		public JetGlobalState() {
+			super("target/demo/minimal", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:minimal:zip:plain-boot-global:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetBootState extends ProcessLauncherState {
+		public JetBootState() {
+			super("target/demo/minimal", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:minimal:zip:spring-boot-boot:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
 }

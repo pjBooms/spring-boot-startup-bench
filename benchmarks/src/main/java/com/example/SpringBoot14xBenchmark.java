@@ -43,13 +43,23 @@ public class SpringBoot14xBenchmark {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void explodedJarLauncher(BootState state) throws Exception {
 		state.run();
 	}
 
 	@Benchmark
 	public void explodedJarMain(MainState state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetPlain(JetPlainState state) throws Exception {
+		state.run();
+	}
+
+	@Benchmark
+	public void jetBoot(JetBootState state) throws Exception {
 		state.run();
 	}
 
@@ -99,4 +109,29 @@ public class SpringBoot14xBenchmark {
 		}
 	}
 
+	@State(Scope.Benchmark)
+	public static class JetPlainState extends ProcessLauncherState {
+		public JetPlainState() {
+			super("target/demo/demo", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:demo:zip:plain-14x:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetBootState extends ProcessLauncherState {
+		public JetBootState() {
+			super("target/demo/demo", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:demo:zip:spring-boot-14x:0.0.1-SNAPSHOT"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
 }

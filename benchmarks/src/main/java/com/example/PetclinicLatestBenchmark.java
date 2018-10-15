@@ -46,7 +46,7 @@ public class PetclinicLatestBenchmark {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void noverify(NoVerifyState state) throws Exception {
 		state.run();
 	}
@@ -56,7 +56,7 @@ public class PetclinicLatestBenchmark {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void explodedJarFlags(FlagsState state) throws Exception {
 		state.run();
 	}
@@ -65,6 +65,16 @@ public class PetclinicLatestBenchmark {
 	public void devtoolsRestart(ExplodedDevtoolsState state) throws Exception {
 		state.run();
 	}
+
+        @Benchmark
+   	public void jetPlain(JetPlainState state) throws Exception {
+   		state.run();
+   	}
+
+   	@Benchmark
+   	public void jetBoot(JetBootState state) throws Exception {
+   		state.run();
+   	}
 
 	public static void main(String[] args) throws Exception {
 		BasicState state = new BasicState();
@@ -170,4 +180,29 @@ public class PetclinicLatestBenchmark {
 		}
 	}
 
+	@State(Scope.Benchmark)
+	public static class JetPlainState extends ProcessLauncherState {
+		public JetPlainState() {
+			super("target/demo/petclinic-latest", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:petclinic-latest:zip:plain-boot:1.4.2"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
+
+	@State(Scope.Benchmark)
+	public static class JetBootState extends ProcessLauncherState {
+		public JetBootState() {
+			super("target/demo/petclinic-latest", true, "target/demo", "--server.port=0");
+			unpack("target/demo", jetZipFile("com.example:petclinic-latest:zip:spring-boot-boot:1.4.2"));
+		}
+
+		@TearDown(Level.Iteration)
+		public void stop() throws Exception {
+			super.after();
+		}
+	}
 }

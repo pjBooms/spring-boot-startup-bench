@@ -38,49 +38,49 @@ import org.openjdk.jmh.util.FileUtils;
 @BenchmarkMode(Mode.SingleShotTime)
 public class SpringBootThinBenchmark {
 
-	@Benchmark
-	public void basic14xThin(Basic14xThinState state) throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void basic14xPrecomputeThin(Basic14xPrecomputeThinState state)
-			throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void basic15xThin(Basic15xThinState state) throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void basic13xThin(Basic13xThinState state) throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void petclinicLatestThin(PetclinicLatestThinState state) throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void petclinicLatesPrecomputeThin(PetclinicLatestPrecomputeThinState state)
-			throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void petclinicThin(PetclinicThinState state) throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void petclinicPrecomputeThin(PetclinicPrecomputeThinState state)
-			throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void basic14xThin(Basic14xThinState state) throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void basic14xPrecomputeThin(Basic14xPrecomputeThinState state)
+//			throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void basic15xThin(Basic15xThinState state) throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void basic13xThin(Basic13xThinState state) throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void petclinicLatestThin(PetclinicLatestThinState state) throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void petclinicLatesPrecomputeThin(PetclinicLatestPrecomputeThinState state)
+//			throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void petclinicThin(PetclinicThinState state) throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void petclinicPrecomputeThin(PetclinicPrecomputeThinState state)
+//			throws Exception {
+//		state.run();
+//	}
+//
 	public static void main(String[] args) throws Exception {
 		Basic14xThinState state = new Basic14xThinState();
 		state.run();

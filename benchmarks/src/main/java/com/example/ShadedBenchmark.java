@@ -33,12 +33,12 @@ import org.openjdk.jmh.annotations.Warmup;
 @BenchmarkMode(Mode.AverageTime)
 public class ShadedBenchmark {
 
-	@Benchmark
+//	@Benchmark
 	public void shaded(ShadedState state) throws Exception {
 		state.run();
 	}
 
-	@Benchmark
+//	@Benchmark
 	public void explodedShadedMain(ShadedMainState state) throws Exception {
 		state.run();
 	}
