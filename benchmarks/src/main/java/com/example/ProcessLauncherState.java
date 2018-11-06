@@ -43,7 +43,7 @@ public class ProcessLauncherState {
 
 	public ProcessLauncherState(String executable, boolean jet, String dir, String... args) {
 		this.args = new ArrayList<>();
-		this.args.add(executable);
+		this.args.add(new File(executable).getAbsolutePath());
 		this.args.add("-Xmx128m");
 //		this.args.add("-Djava.security.egd=file:/dev/urandom");
 //		String vendor = System.getProperty("java.vendor", "").toLowerCase();
@@ -159,7 +159,7 @@ public class ProcessLauncherState {
 
 	public void unpack(String path, String jar) {
 		File home = new File(path);
-		ProcessBuilder builder = new ProcessBuilder(getJarExec(), "xf", jar);
+		ProcessBuilder builder = new ProcessBuilder("unzip", jar);
 		Process started = null;
 		try {
 			if (home.exists()) {
