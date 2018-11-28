@@ -101,6 +101,7 @@
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
 								<goal>jet:testrun</goal>
+								<goal>jet:profile</goal>
 								<goal>jet:build</goal>
 							</goals>
 							<properties>
@@ -125,6 +126,7 @@
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
 								<goal>jet:testrun</goal>
+								<goal>jet:profile</goal>
 								<goal>jet:build</goal>
 							</goals>
 							<properties>
@@ -150,6 +152,7 @@
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
 								<goal>jet:testrun</goal>
+								<goal>jet:profile</goal>
 								<goal>jet:build</goal>
 							</goals>
 							<properties>
@@ -175,6 +178,7 @@
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
 								<goal>jet:testrun</goal>
+								<goal>jet:profile</goal>
 								<goal>jet:build</goal>
 							</goals>
 							<properties>
@@ -199,6 +203,7 @@
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
 								<goal>jet:testrun</goal>
+								<goal>jet:profile</goal>
 								<goal>jet:build</goal>
 							</goals>
 							<properties>
@@ -225,6 +230,7 @@
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
 								<goal>jet:testrun</goal>
+								<goal>jet:profile</goal>
 								<goal>jet:build</goal>
 							</goals>
 							<properties>
@@ -235,30 +241,31 @@
 							</profiles>
 						</configuration>
 					</execution>
-					<execution>
-						<id>jet-global</id>
-						<phase>package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<inherited>false</inherited>
-						<configuration>
-							<pomIncludes>
-								<pomInclude>minimal/pom.xml</pomInclude>
-							</pomIncludes>
-							<projectsDirectory>..</projectsDirectory>
-							<goals>
-								<goal>jet:testrun</goal>
-								<goal>jet:build</goal>
-							</goals>
-							<properties>
-								<skipTests/>
-							</properties>
-							<profiles>
-								<profile>jet-global</profile>
-							</profiles>
-						</configuration>
-					</execution>
+					<!--<execution>-->
+						<!--<id>jet-global</id>-->
+						<!--<phase>package</phase>-->
+						<!--<goals>-->
+							<!--<goal>run</goal>-->
+						<!--</goals>-->
+						<!--<inherited>false</inherited>-->
+						<!--<configuration>-->
+							<!--<pomIncludes>-->
+								<!--<pomInclude>minimal/pom.xml</pomInclude>-->
+							<!--</pomIncludes>-->
+							<!--<projectsDirectory>..</projectsDirectory>-->
+							<!--<goals>-->
+								<!--<goal>jet:testrun</goal>-->
+								<!--<goal>jet:profile</goal>-->
+								<!--<goal>jet:build</goal>-->
+							<!--</goals>-->
+							<!--<properties>-->
+								<!--<skipTests/>-->
+							<!--</properties>-->
+							<!--<profiles>-->
+								<!--<profile>jet-global</profile>-->
+							<!--</profiles>-->
+						<!--</configuration>-->
+					<!--</execution>-->
 					<!--<execution>-->
 						<!--<id>shaded</id>-->
 						<!--<phase>install</phase>-->

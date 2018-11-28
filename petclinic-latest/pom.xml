@@ -268,8 +268,10 @@
                     <mainJar>target/${project.build.finalName}${jet.classifier}.jar</mainJar>
                     <mainClass>org/springframework/samples/petclinic/PetClinicApplication</mainClass>
                     <multiApp>true</multiApp>
+                    <globalOptimizer>true</globalOptimizer>
                     <execProfiles>
                         <testRunTimeout>60</testRunTimeout>
+                        <profileRunTimeout>10</profileRunTimeout>
                     </execProfiles>
                     <compilerOptions>
                         <compilerOption>-baselineall</compilerOption>

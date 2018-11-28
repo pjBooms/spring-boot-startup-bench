@@ -43,11 +43,11 @@ public class MinimalBenchmark {
 		state.run();
 	}
 
-	@Benchmark
-	public void jetGlobal(JetGlobalState state) throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void jetGlobal(JetGlobalState state) throws Exception {
+//		state.run();
+//	}
+//
 	@Benchmark
 	public void jetBoot(JetBootState state) throws Exception {
 		state.run();

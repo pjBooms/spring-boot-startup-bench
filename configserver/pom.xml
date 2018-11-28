@@ -130,8 +130,10 @@
 					<mainJar>target/${project.build.finalName}${jet.classifier}.jar</mainJar>
 					<mainClass>demo/ConfigServerApplication</mainClass>
                                         <multiApp>true</multiApp>
+                                        <globalOptimizer>true</globalOptimizer>
 					<execProfiles>
 						<testRunTimeout>60</testRunTimeout>
+						<profileRunTimeout>10</profileRunTimeout>
 					</execProfiles>
 					<compilerOptions>
 						<compilerOption>-baselineall</compilerOption>
