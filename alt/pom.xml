@@ -126,6 +126,7 @@
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
 								<goal>jet:testrun</goal>
+								<goal>jet:clean</goal>
 								<goal>jet:profile</goal>
 								<goal>jet:build</goal>
 							</goals>
@@ -203,6 +204,7 @@
 							<projectsDirectory>..</projectsDirectory>
 							<goals>
 								<goal>jet:testrun</goal>
+								<goal>jet:clean</goal>
 								<goal>jet:profile</goal>
 								<goal>jet:build</goal>
 							</goals>
