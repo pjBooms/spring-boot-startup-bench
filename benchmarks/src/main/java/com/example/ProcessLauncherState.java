@@ -45,7 +45,7 @@ public class ProcessLauncherState {
 		this.args = new ArrayList<>();
 		this.args.add(new File(executable).getAbsolutePath());
 		this.args.add("-Xmx128m");
-//		this.args.add("-Djava.security.egd=file:/dev/urandom");
+//        this.args.add("-Djava.security.egd=file:/dev/./urandom");
 //		String vendor = System.getProperty("java.vendor", "").toLowerCase();
 //		if (vendor.contains("ibm") || vendor.contains("j9")) {
 //			this.args.addAll(Arrays.asList("-Xms32m", "-Xquickstart", "-Xshareclasses",
@@ -159,7 +159,7 @@ public class ProcessLauncherState {
 
 	public void unpack(String path, String jar) {
 		File home = new File(path);
-		ProcessBuilder builder = new ProcessBuilder("unzip", jar);
+		ProcessBuilder builder = new ProcessBuilder("unzip", "-q", jar);
 		Process started = null;
 		try {
 			if (home.exists()) {
