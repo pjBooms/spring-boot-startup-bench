@@ -28,11 +28,11 @@ public class MinimalBenchmark {
 	private static final String CLASSPATH = "BOOT-INF/classes" + File.pathSeparator
 			+ "BOOT-INF/lib/*";
 
-	@Benchmark
-	public void fatJar(FatJarState state) throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void fatJar(FatJarState state) throws Exception {
+//		state.run();
+//	}
+//
 	@Benchmark
 	public void explodedJarMain(MainState state) throws Exception {
 		state.run();
@@ -48,11 +48,11 @@ public class MinimalBenchmark {
 //		state.run();
 //	}
 //
-	@Benchmark
-	public void jetBoot(JetBootState state) throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void jetBoot(JetBootState state) throws Exception {
+//		state.run();
+//	}
+//
 	@State(Scope.Benchmark)
 	public static class FatJarState extends ProcessLauncherState {
 		public FatJarState() {

@@ -38,26 +38,26 @@ public class ConfigServerBenchmark {
 	private static final String CLASSPATH = "BOOT-INF/classes" + File.pathSeparator
 			+ "BOOT-INF/lib/*";
 
-	@Benchmark
-	public void fatJar14x(FatJar14xState state) throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void fatJar15x(FatJar15xState state) throws Exception {
-		state.run();
-	}
-
 //	@Benchmark
-	public void fatJar13x(FatJar13xState state) throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void devtoolsRestart(JetDevtoolsState state) throws Exception {
-		state.run();
-	}
-
+//	public void fatJar14x(FatJar14xState state) throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void fatJar15x(FatJar15xState state) throws Exception {
+//		state.run();
+//	}
+//
+////	@Benchmark
+//	public void fatJar13x(FatJar13xState state) throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void devtoolsRestart(JetDevtoolsState state) throws Exception {
+//		state.run();
+//	}
+//
 	@Benchmark
 	public void explodedJarMain14x(MainState14x state) throws Exception {
 		state.run();
@@ -73,26 +73,26 @@ public class ConfigServerBenchmark {
 		state.run();
 	}
 
-	@Benchmark
-	public void jetBoot14x(JetBootState14x state) throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void jetBoot14x(JetBootState14x state) throws Exception {
+//		state.run();
+//	}
+//
 	@Benchmark
 	public void jetPlain15x(JetPlainState15x state) throws Exception {
 		state.run();
 	}
 
-	@Benchmark
-	public void jetBoot15x(JetBootState15x state) throws Exception {
-		state.run();
-	}
-
-	@Benchmark
-	public void jetDevtoolsRestart(JetDevtoolsState state) throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void jetBoot15x(JetBootState15x state) throws Exception {
+//		state.run();
+//	}
+//
+//	@Benchmark
+//	public void jetDevtoolsRestart(JetDevtoolsState state) throws Exception {
+//		state.run();
+//	}
+//
 	public static void main(String[] args) throws Exception {
 		ExplodedDevtoolsState state = new ExplodedDevtoolsState();
 		state.setup();

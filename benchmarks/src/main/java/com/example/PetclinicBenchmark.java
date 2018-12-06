@@ -41,41 +41,41 @@ public class PetclinicBenchmark {
 	private static final String CLASSPATH = "BOOT-INF/classes" + File.pathSeparator
 			+ "BOOT-INF/lib/*";
 
-	@Benchmark
-	public void fatJar(BasicState state) throws Exception {
-		state.run();
-	}
-
 //	@Benchmark
-	public void noverify(NoVerifyState state) throws Exception {
-		state.run();
-	}
-
+//	public void fatJar(BasicState state) throws Exception {
+//		state.run();
+//	}
+//
+////	@Benchmark
+//	public void noverify(NoVerifyState state) throws Exception {
+//		state.run();
+//	}
+//
 	@Benchmark
 	public void explodedJarMain(MainState state) throws Exception {
 		state.run();
 	}
 
-	@Benchmark
-	public void devtoolsRestart(ExplodedDevtoolsState state) throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void devtoolsRestart(ExplodedDevtoolsState state) throws Exception {
+//		state.run();
+//	}
+//
 	@Benchmark
 	public void jetPlain(JetPlainState state) throws Exception {
 		state.run();
 	}
 
-	@Benchmark
-	public void jetBoot(JetBootState state) throws Exception {
-		state.run();
-	}
-
-        @Benchmark
-   	public void jetDevtoolsRestart(JetDevtoolsState state) throws Exception {
-   		state.run();
-   	}
-
+//	@Benchmark
+//	public void jetBoot(JetBootState state) throws Exception {
+//		state.run();
+//	}
+//
+//        @Benchmark
+//   	public void jetDevtoolsRestart(JetDevtoolsState state) throws Exception {
+//   		state.run();
+//   	}
+//
 	public static void main(String[] args) throws Exception {
 		BasicState state = new BasicState();
 		state.run();

@@ -44,20 +44,20 @@ public class ProcessLauncherState {
 	public ProcessLauncherState(String executable, boolean jet, String dir, String... args) {
 		this.args = new ArrayList<>();
 		this.args.add(new File(executable).getAbsolutePath());
-		this.args.add("-Xmx128m");
-//        this.args.add("-Djava.security.egd=file:/dev/./urandom");
-//		String vendor = System.getProperty("java.vendor", "").toLowerCase();
-//		if (vendor.contains("ibm") || vendor.contains("j9")) {
-//			this.args.addAll(Arrays.asList("-Xms32m", "-Xquickstart", "-Xshareclasses",
-//					"-Xscmx128m"));
+//		this.args.add("-Xmx128m");
+////        this.args.add("-Djava.security.egd=file:/dev/./urandom");
+////		String vendor = System.getProperty("java.vendor", "").toLowerCase();
+////		if (vendor.contains("ibm") || vendor.contains("j9")) {
+////			this.args.addAll(Arrays.asList("-Xms32m", "-Xquickstart", "-Xshareclasses",
+////					"-Xscmx128m"));
+////		}
+////		else {
+////			this.args.addAll(Arrays.asList("-XX:TieredStopAtLevel=1"));
+////		}
+//		if (jet) {
+//			this.args.add("-args");
 //		}
-//		else {
-//			this.args.addAll(Arrays.asList("-XX:TieredStopAtLevel=1"));
-//		}
-		if (jet) {
-			this.args.add("-args");
-		}
-
+//
 		this.args.addAll(Arrays.asList(args));
 		if (System.getProperty("bench.args") != null) {
 			this.args.addAll(4,

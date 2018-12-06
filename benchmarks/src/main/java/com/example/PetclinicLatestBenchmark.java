@@ -41,16 +41,16 @@ public class PetclinicLatestBenchmark {
 	private static final String CLASSPATH = "." + File.pathSeparator + "BOOT-INF/classes"
 			+ File.pathSeparator + "BOOT-INF/lib/*";
 
-	@Benchmark
-	public void fatJar(BasicState state) throws Exception {
-		state.run();
-	}
-
 //	@Benchmark
-	public void noverify(NoVerifyState state) throws Exception {
-		state.run();
-	}
-
+//	public void fatJar(BasicState state) throws Exception {
+//		state.run();
+//	}
+//
+////	@Benchmark
+//	public void noverify(NoVerifyState state) throws Exception {
+//		state.run();
+//	}
+//
 	@Benchmark
 	public void explodedJarMain(MainState state) throws Exception {
 		state.run();
@@ -71,11 +71,11 @@ public class PetclinicLatestBenchmark {
    		state.run();
    	}
 
-   	@Benchmark
-   	public void jetBoot(JetBootState state) throws Exception {
-   		state.run();
-   	}
-
+//   	@Benchmark
+//   	public void jetBoot(JetBootState state) throws Exception {
+//   		state.run();
+//   	}
+//
 	public static void main(String[] args) throws Exception {
 		BasicState state = new BasicState();
 		state.run();

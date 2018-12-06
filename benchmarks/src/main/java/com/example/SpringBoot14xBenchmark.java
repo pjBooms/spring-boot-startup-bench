@@ -38,11 +38,11 @@ public class SpringBoot14xBenchmark {
 	private static final String CLASSPATH = "BOOT-INF/classes" + File.pathSeparator
 			+ "BOOT-INF/lib/*";
 
-	@Benchmark
-	public void fatJar(BasicState state) throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void fatJar(BasicState state) throws Exception {
+//		state.run();
+//	}
+//
 //	@Benchmark
 	public void explodedJarLauncher(BootState state) throws Exception {
 		state.run();
@@ -58,11 +58,11 @@ public class SpringBoot14xBenchmark {
 		state.run();
 	}
 
-	@Benchmark
-	public void jetBoot(JetBootState state) throws Exception {
-		state.run();
-	}
-
+//	@Benchmark
+//	public void jetBoot(JetBootState state) throws Exception {
+//		state.run();
+//	}
+//
 	public static void main(String[] args) throws Exception {
 		BootState state = new BootState();
 		state.run();
