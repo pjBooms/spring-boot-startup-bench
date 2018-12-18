@@ -39,7 +39,7 @@ public class MinimalBenchmark {
 	}
 
 	@Benchmark
-	public void jetPlain(JetGlobalState state) throws Exception {
+	public void jetPlain(JetPlainState state) throws Exception {
 		state.run();
 	}
 
